@@ -1,35 +1,11 @@
 import styled from "styled-components";
 import GlobalStyles from "./styles/GlobalStyles";
-
-const H1 = styled.h1`
-  font-size: 30px;
-  font-weight: 600;
-  background-color: rebeccapurple;
-`;
-
-const Button = styled.button`
-  font-size: 1.4rem;
-  padding: 1.2rem 1.6rem;
-  font-weight: 500;
-  border: none;
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-brand-600);
-  color: var(--color-brand-50);
-  box-shadow: var(--shadow-sm);
-  cursor: pointer;
-`;
-
-const Input = styled.input`
-  border: 1px solid var(--color-grey-300);
-  background-color: var(--color-grey-0);
-  border-radius: var(--border-radius-sm);
-  padding: 0.8rem 1.2rem;
-  margin-right: 1rem;
-  box-shadow: var(--shadow-sm);
-`;
+import Button from "./ui/Button";
+import Input from "./ui/Input";
+import Heading from "./ui/heading";
+import Row from "./ui/Row";
 
 const StyledApp = styled.div`
-  background-color: rosybrown;
   padding: 20px;
 `;
 
@@ -38,12 +14,30 @@ function App() {
     <>
       <GlobalStyles />
       <StyledApp>
-        <H1>The Wild Oasis</H1>
-        <Button onClick={() => alert("Check in")}>Check in</Button>
-        <Button onClick={() => alert("Check out")}>Check out</Button>
+        <Row>
+          <Row type="horizontal">
+            <Heading as="h1">The Wild Oasis</Heading>
+            <div>
+              <Heading as="h2">Check in and out</Heading>
+              <Button onClick={() => alert("Check in")}>Check in</Button>
+              <Button
+                size="small"
+                variation="secondary"
+                onClick={() => alert("Check out")}
+              >
+                Check out
+              </Button>
+            </div>
+          </Row>
 
-        <Input type="number" placeholder="Number of guests" />
-        <Input type="number" placeholder="Number of guests" />
+          <Row>
+            <Heading as="h3">Form</Heading>
+            <form>
+              <Input type="number" placeholder="Number of guests" />
+              <Input type="number" placeholder="Number of guests" />
+            </form>
+          </Row>
+        </Row>
       </StyledApp>
     </>
   );
