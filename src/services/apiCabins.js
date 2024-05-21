@@ -6,9 +6,33 @@ export async function getCabins() {
   // Error handling
   if (error) {
     console.error(error);
-    throw new Error("Table cabins could not be loaded");
+    throw new Error("Cabins could not be loaded");
   }
 
   // If everything is good
   return data;
+}
+
+export async function createCabin(newCabin) {
+  const { data, error } = await supabase
+    .from("cabins")
+    .insert([newCabin])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Cabin could not be created");
+  }
+
+  return data;
+}
+
+export async function deleteCabin(id) {
+  const { error } = await supabase.from("cabins").delete().eq("id", id);
+
+  // Error handling
+  if (error) {
+    console.error(error);
+    throw new Error("Cabin could not be deleted or does not exist");
+  }
 }

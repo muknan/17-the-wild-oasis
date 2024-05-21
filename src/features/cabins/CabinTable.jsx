@@ -34,23 +34,21 @@ function CabinTable() {
     data: cabins,
     error,
   } = useQuery({
-    queryKey: ["cabin"],
+    queryKey: ["cabins"],
     queryFn: getCabins,
   });
-
-  console.log(cabins);
 
   if (isLoading) return <Spinner />;
 
   return (
     <Table role="table">
       <TableHeader role="row">
-        <div>Image</div>
+        <div></div>
         <div>Cabin</div>
         <div>Capacity</div>
         <div>Price</div>
         <div>Discount</div>
-        <div>...</div>
+        <div></div>
       </TableHeader>
       {cabins.map((cabin) => (
         <CabinRow cabin={cabin} key={cabin.id} />
