@@ -4,6 +4,8 @@ import styled from "styled-components";
 import CreateCabinForm from "./CreateCabinForm";
 import { formatCurrency } from "../../utils/helpers";
 import { useDeleteCabin } from "./useDeleteCabin";
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
+import { useCreateCabin } from "./useCreateCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -44,9 +46,36 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-function CabinRow({ cabin }) {
-  const { isDeleting, deleteCabin } = useDeleteCabin();
+const BtnContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+`;
 
+const TempBtn = styled.button`
+  border: none;
+  background-color: var(--color-brand-600);
+  padding: 1rem;
+  border-radius: 9999px;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--color-grey-50);
+
+  &:hover {
+    background-color: var(--color-brand-700);
+  }
+
+  &:active,
+  &:focus {
+    border: none;
+    outline: none;
+  }
+`;
+
+function CabinRow({ cabin }) {
+  const { isCreating, createCabin } = useCreateCabin();
+  const { isDeleting, deleteCabin } = useDeleteCabin();
   const [showForm, setShowForm] = useState(false);
 
   const {
@@ -56,7 +85,19 @@ function CabinRow({ cabin }) {
     regularPrice,
     discount,
     image,
+    description,
   } = cabin;
+
+  function handleDuplicate() {
+    createCabin({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
 
   return (
     <>
@@ -70,12 +111,17 @@ function CabinRow({ cabin }) {
         ) : (
           <span>&mdash;</span>
         )}
-        <div>
-          <button onClick={() => setShowForm((s) => !s)}>Edit</button>
-          <button disabled={isDeleting} onClick={() => deleteCabin(cabinId)}>
-            Delete
-          </button>
-        </div>
+        <BtnContainer>
+          <TempBtn disabled={isCreating} onClick={handleDuplicate}>
+            <HiSquare2Stack />
+          </TempBtn>
+          <TempBtn onClick={() => setShowForm((s) => !s)}>
+            <HiPencil />
+          </TempBtn>
+          <TempBtn disabled={isDeleting} onClick={() => deleteCabin(cabinId)}>
+            <HiTrash />
+          </TempBtn>
+        </BtnContainer>
       </TableRow>
       {showForm && (
         <CreateCabinForm cabinToEdit={cabin} setShowForm={setShowForm} />
