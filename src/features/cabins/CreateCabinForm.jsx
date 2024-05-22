@@ -7,24 +7,24 @@ import FormRow from "../../ui/FormRow";
 
 import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./useCreateCabin";
-import { useEditCabin } from "./useEditCabin";
+import { useUpdateCabin } from "./useUpdateCabin";
 
-function CreateCabinForm({ cabinToEdit = {}, setShowForm }) {
+function CreateCabinForm({ cabinToUpdate = {}, setShowForm }) {
   const { createCabin, isCreating } = useCreateCabin();
-  const { editCabin, isEditing } = useEditCabin();
+  const { updateCabin, isUpdating } = useUpdateCabin();
 
-  const isWorking = isCreating || isEditing;
+  const isWorking = isCreating || isUpdating;
 
-  const { id: editId, ...editValues } = cabinToEdit;
+  const { id: updateId, ...updateValues } = cabinToUpdate;
 
   // To check if we are creating a new cabin or editing an existing one
-  const isEditSession = Boolean(editId);
+  const isUpdateSession = Boolean(updateId);
 
   // formState to get errors triggered from registered input
   // reset onSuccess to reset values
   // getValues().field name to validate or do the comparison with other input fields value
   const { register, handleSubmit, reset, getValues, formState } = useForm({
-    defaultValues: isEditSession ? editValues : {},
+    defaultValues: isUpdateSession ? updateValues : {},
   });
 
   const { errors } = formState;
@@ -32,9 +32,9 @@ function CreateCabinForm({ cabinToEdit = {}, setShowForm }) {
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
-    if (isEditSession)
-      editCabin(
-        { newCabinData: { ...data, image }, id: editId },
+    if (isUpdateSession)
+      updateCabin(
+        { newCabinData: { ...data, image }, id: updateId },
         {
           onSuccess: () => {
             reset();
@@ -136,7 +136,7 @@ function CreateCabinForm({ cabinToEdit = {}, setShowForm }) {
           id="image"
           accept="image/*"
           {...register("image", {
-            required: isEditSession ? false : "This field is required",
+            required: isUpdateSession ? false : "This field is required",
           })}
         />
       </FormRow>
@@ -147,7 +147,7 @@ function CreateCabinForm({ cabinToEdit = {}, setShowForm }) {
           Cancel
         </Button>
         <Button disabled={isWorking}>
-          {isEditSession ? "Edit cabin" : "Add new cabin"}
+          {isUpdateSession ? "Update cabin" : "Add new cabin"}
         </Button>
       </FormRow>
     </Form>

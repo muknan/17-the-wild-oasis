@@ -13,7 +13,7 @@ export async function getCabins() {
   return data;
 }
 
-export async function createEditCabin(newCabin, id) {
+export async function createUpdateCabin(newCabin, id) {
   const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
 
   // Replace all to replace "/" with "" incase file name has a "/" in it for some reason, that would cause supabase to create a new folder instead
@@ -32,7 +32,7 @@ export async function createEditCabin(newCabin, id) {
   // A) CREATE
   if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
 
-  // B) EDIT
+  // B) UPDATE
   if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
 
   const { data, error } = await query.select().single();
