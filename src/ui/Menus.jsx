@@ -1,4 +1,3 @@
-import { set } from "date-fns";
 import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
@@ -85,8 +84,7 @@ function Menus({ children }) {
 }
 
 function Toggle({ id }) {
-  const { openId, open, close, position, setPosition } =
-    useContext(MenusContext);
+  const { openId, open, close, setPosition } = useContext(MenusContext);
 
   function handleClick(e) {
     // Calculating position

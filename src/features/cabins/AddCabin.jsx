@@ -1,8 +1,12 @@
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import CreateCabinForm from "./CreateCabinForm";
+import { useCabins } from "./useCabins";
 
 function AddCabin() {
+  const { isLoading } = useCabins();
+  if (isLoading) return;
+
   return (
     <div>
       <Modal>
