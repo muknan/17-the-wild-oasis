@@ -16,7 +16,7 @@ const FilterButton = styled.button`
   border: none;
 
   ${(props) =>
-    props.active &&
+    props.$active &&
     css`
       background-color: var(--color-brand-600);
       color: var(--color-brand-50);
@@ -32,6 +32,7 @@ const FilterButton = styled.button`
   &:hover:not(:disabled) {
     background-color: var(--color-brand-600);
     color: var(--color-brand-50);
+    border-radius: var(--border-radius-sm);
   }
 `;
 
@@ -50,7 +51,7 @@ function Filter({ filterField, options }) {
         <FilterButton
           onClick={() => handleClick(option.value)}
           key={option.value}
-          active={option.value === currentFilter}
+          $active={option.value === currentFilter}
           disabled={option.value === currentFilter}
         >
           {option.label}
