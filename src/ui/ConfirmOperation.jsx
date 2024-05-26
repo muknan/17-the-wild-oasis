@@ -37,16 +37,20 @@ function ConfirmOperation({
           <p>
             Are you sure you want to {operation} {resourceName} permanently?
           </p>
-          <p style={{ color: "var(--color-red-700)", fontWeight: "bold" }}>
+          <p style={{ color: "var(--color-red-700)", fontWeight: "600" }}>
             This action cannot be undone!
           </p>
         </>
       )}
       {operation === "duplicate" && (
-        <p>
-          Are you sure you want to {operation} {resourceName}? This action will
-          create a new record!
-        </p>
+        <>
+          <p>
+            Are you sure you want to {operation} {resourceName}?
+          </p>
+          <p style={{ color: "var(--color-grey-500)", fontWeight: "600" }}>
+            This action will create a new record!
+          </p>
+        </>
       )}
 
       <div>
